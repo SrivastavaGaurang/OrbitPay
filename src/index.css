@@ -1,0 +1,235 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-deep: var(--theme-bg-deep);
+  --color-bg-dark: var(--theme-bg-dark);
+  --color-bg-card: var(--theme-bg-card);
+  --color-bg-card-hover: var(--theme-bg-card-hover);
+  --color-bg-surface: var(--theme-bg-surface);
+  --color-text-primary: var(--theme-text-primary);
+  --color-text-secondary: var(--theme-text-secondary);
+  --color-text-muted: var(--theme-text-muted);
+  --color-border-primary: var(--theme-border-primary);
+  
+  --color-brand-purple: #8b5cf6;
+  --color-brand-cyan: #06b6d4;
+  --color-brand-pink: #ec4899;
+  
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delayed: float 6s ease-in-out infinite 3s;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-glow-purple: glow-purple 2s ease-in-out infinite alternate;
+  --animate-glow-cyan: glow-cyan 2s ease-in-out infinite alternate;
+  
+  --font-display: 'Outfit', sans-serif;
+  --font-sans: 'Inter', sans-serif;
+}
+
+/* ==================================================
+   THEME SYSTEM: Dark & Light CSS custom properties
+   ================================================== */
+
+/* Default: dark mode */
+:root, .dark {
+  --theme-bg-deep: #05050f;
+  --theme-bg-dark: #0a0a1a;
+  --theme-bg-card: #12122b;
+  --theme-bg-card-hover: #1a1a3a;
+  --theme-bg-surface: rgba(255, 255, 255, 0.05);
+  --theme-text-primary: #f3f4f6;
+  --theme-text-secondary: #9ca3af;
+  --theme-text-muted: #6b7280;
+  --theme-border-primary: rgba(255, 255, 255, 0.08);
+  --theme-scrollbar-track: #05050f;
+  --theme-scrollbar-thumb: #1e1b4b;
+  --theme-scrollbar-thumb-hover: #312e81;
+
+  --glass-bg: rgba(10, 10, 26, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-premium-bg: linear-gradient(135deg, rgba(18, 18, 43, 0.7) 0%, rgba(10, 10, 26, 0.8) 100%);
+  --glass-premium-border: rgba(139, 92, 246, 0.15);
+  --glass-premium-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+  --mesh-color-1: rgba(139, 92, 246, 0.15);
+  --mesh-color-2: rgba(6, 182, 212, 0.15);
+  --mesh-color-3: rgba(236, 72, 153, 0.1);
+}
+
+/* Light mode */
+.light {
+  --theme-bg-deep: #f0f2f5;
+  --theme-bg-dark: #e8eaef;
+  --theme-bg-card: #ffffff;
+  --theme-bg-card-hover: #f4f0ff;
+  --theme-bg-surface: rgba(0, 0, 0, 0.03);
+  --theme-text-primary: #111827;
+  --theme-text-secondary: #4b5563;
+  --theme-text-muted: #9ca3af;
+  --theme-border-primary: rgba(0, 0, 0, 0.08);
+  --theme-scrollbar-track: #f0f2f5;
+  --theme-scrollbar-thumb: #c7c7d5;
+  --theme-scrollbar-thumb-hover: #9b9bae;
+
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --glass-premium-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(245, 243, 255, 0.9) 100%);
+  --glass-premium-border: rgba(139, 92, 246, 0.2);
+  --glass-premium-shadow: 0 8px 32px 0 rgba(139, 92, 246, 0.08);
+
+  --mesh-color-1: rgba(139, 92, 246, 0.07);
+  --mesh-color-2: rgba(6, 182, 212, 0.06);
+  --mesh-color-3: rgba(236, 72, 153, 0.05);
+}
+
+/* Custom keyframe animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glow-purple {
+  0% { box-shadow: 0 0 5px rgba(139, 92, 246, 0.2), 0 0 15px rgba(139, 92, 246, 0.1); }
+  100% { box-shadow: 0 0 15px rgba(139, 92, 246, 0.5), 0 0 30px rgba(139, 92, 246, 0.3); }
+}
+
+@keyframes glow-cyan {
+  0% { box-shadow: 0 0 5px rgba(6, 182, 212, 0.2), 0 0 15px rgba(6, 182, 212, 0.1); }
+  100% { box-shadow: 0 0 15px rgba(6, 182, 212, 0.5), 0 0 30px rgba(6, 182, 212, 0.3); }
+}
+
+@keyframes orbit-cw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbit-ccw {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Orbit classes */
+.orbit-container-1 { animation: orbit-cw 40s linear infinite; }
+.orbit-counter-1 { animation: orbit-ccw 40s linear infinite; }
+.orbit-container-2 { animation: orbit-cw 60s linear infinite; }
+.orbit-counter-2 { animation: orbit-ccw 60s linear infinite; }
+.orbit-container-3 { animation: orbit-cw 90s linear infinite; }
+.orbit-counter-3 { animation: orbit-ccw 90s linear infinite; }
+
+.orbit-pause:hover .orbit-container-1,
+.orbit-pause:hover .orbit-container-2,
+.orbit-pause:hover .orbit-container-3,
+.orbit-pause:hover .orbit-counter-1,
+.orbit-pause:hover .orbit-counter-2,
+.orbit-pause:hover .orbit-counter-3 {
+  animation-play-state: paused;
+}
+
+/* ==================================================
+   BASE RESETS - Using CSS variables
+   ================================================== */
+html, body {
+  background-color: var(--theme-bg-deep);
+  color: var(--theme-text-primary);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  min-height: 100vh;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--theme-scrollbar-track); }
+::-webkit-scrollbar-thumb { background: var(--theme-scrollbar-thumb); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--theme-scrollbar-thumb-hover); }
+
+/* ==================================================
+   GLASS UTILITIES - Theme-aware
+   ================================================== */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  transition: background 0.35s ease, border-color 0.35s ease;
+}
+
+.glass-premium {
+  background: var(--glass-premium-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-premium-border);
+  box-shadow: var(--glass-premium-shadow);
+  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* text-gradient stays consistent */
+.text-gradient {
+  background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-pink {
+  background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Mesh Background - Theme-aware */
+.bg-mesh {
+  background-image: 
+    radial-gradient(at 0% 0%, var(--mesh-color-1) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, var(--mesh-color-2) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, var(--mesh-color-3) 0px, transparent 50%);
+}
+
+/* ==================================================
+   THEME UTILITY CLASSES
+   Used in components: t-bg, t-text, t-border, etc.
+   ================================================== */
+.t-bg-deep { background-color: var(--theme-bg-deep); transition: background-color 0.35s ease; }
+.t-bg-dark { background-color: var(--theme-bg-dark); transition: background-color 0.35s ease; }
+.t-bg-card { background-color: var(--theme-bg-card); transition: background-color 0.35s ease; }
+.t-bg-surface { background-color: var(--theme-bg-surface); transition: background-color 0.35s ease; }
+.t-text { color: var(--theme-text-primary); transition: color 0.35s ease; }
+.t-text-secondary { color: var(--theme-text-secondary); transition: color 0.35s ease; }
+.t-text-muted { color: var(--theme-text-muted); transition: color 0.35s ease; }
+.t-border { border-color: var(--theme-border-primary); transition: border-color 0.35s ease; }
+
+/* Light theme specific overrides for select, input */
+.light select,
+.light input,
+.light textarea {
+  background: rgba(0, 0, 0, 0.03);
+  color: #111827;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.light select option {
+  background: #ffffff;
+  color: #111827;
+}
+
+/* Neon border works for both themes */
+.neon-border { position: relative; }
+.neon-border::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+.neon-border:hover::after { opacity: 1; }
