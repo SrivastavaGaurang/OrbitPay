@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
+import { useCurrency } from '../../context/CurrencyContext';
 import { useSubscriptions } from '../../context/SubscriptionContext';
 import { daysUntilRenewal } from '../../utils/helpers';
 import { Bell, Plus, Sun, Moon, Menu, ChevronDown, Sparkles } from 'lucide-react';
@@ -12,6 +13,7 @@ import { Logo } from '../ui/Logo';
 export const TopBar = ({ onMenuClick }) => {
   const { user, logout } = useAuth();
   const { isDark, toggleTheme } = useTheme();
+  const { activeCurrency, setActiveCurrency, availableCurrencies } = useCurrency();
   const { subscriptions } = useSubscriptions();
   const navigate = useNavigate();
   const [showNotifications, setShowNotifications] = useState(false);
@@ -50,10 +52,24 @@ export const TopBar = ({ onMenuClick }) => {
         {/* Quick Add Button */}
         <button
           onClick={() => navigate('/subscriptions/add')}
-          className="flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-gradient-to-r from-brand-purple to-brand-cyan text-white text-xs font-semibold hover:shadow-[0_0_15px_rgba(139,92,246,0.25)] transition-all cursor-pointer"
+          className="flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-gradient-to-r from-brand-purple to-brand-cyan text-white text-xs font-bold hover:shadow-[0_0_15px_rgba(139,92,246,0.25)] transition-all cursor-pointer"
         >
           <Plus size={14} /> <span className="hidden sm:inline">Add New</span>
         </button>
+
+        {/* Global Currency Selector */}
+        <select
+          value={activeCurrency}
+          onChange={(e) => setActiveCurrency(e.target.value)}
+          className="px-2.5 py-1.5 rounded-xl t-bg-surface border t-border t-text text-xs font-bold focus:outline-none focus:border-brand-purple/40 cursor-pointer"
+          title="Change Global Currency"
+        >
+          {availableCurrencies.map(c => (
+            <option key={c.code} value={c.code}>
+              {c.symbol} {c.code}
+            </option>
+          ))}
+        </select>
 
         {/* Theme Toggle */}
         <button

@@ -9,6 +9,10 @@ import Analytics from '../pages/Analytics';
 import Calendar from '../pages/Calendar';
 import BudgetManager from '../pages/BudgetManager';
 import Insights from '../pages/Insights';
+import Simulator from '../pages/Simulator';
+import BillSplitter from '../pages/BillSplitter';
+import ZombieRadar from '../pages/ZombieRadar';
+import Achievements from '../pages/Achievements';
 import Settings from '../pages/Settings';
 import Pricing from '../pages/Pricing';
 import NotFound from '../pages/NotFound';
@@ -56,20 +60,36 @@ export const router = createBrowserRouter([
         element: <Calendar />
       },
       {
-        path: 'settings',
-        element: <Settings />
-      },
-      {
-        path: 'pricing',
-        element: <Pricing />
-      },
-      {
         path: 'budget',
         element: <BudgetManager />
       },
       {
         path: 'insights',
         element: <Insights />
+      },
+      {
+        path: 'simulator',
+        element: <Simulator />
+      },
+      {
+        path: 'split',
+        element: <BillSplitter />
+      },
+      {
+        path: 'radar',
+        element: <ZombieRadar />
+      },
+      {
+        path: 'achievements',
+        element: <Achievements />
+      },
+      {
+        path: 'settings',
+        element: <Settings />
+      },
+      {
+        path: 'pricing',
+        element: <Pricing />
       }
     ]
   },
