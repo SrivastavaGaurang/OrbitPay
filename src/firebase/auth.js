@@ -38,7 +38,7 @@ const seedInitialSubscriptions = (userId) => {
     },
     {
       id: "sub-2",
-      name: "Spotify",
+      name: "Spotify Duo",
       logo: "https://www.scdn.co/lyric-find/assets/images/favicon.png",
       category: "entertainment",
       cost: 179,
@@ -48,12 +48,12 @@ const seedInitialSubscriptions = (userId) => {
       nextRenewal: "2026-08-10",
       status: "active",
       paymentMethod: "UPI Auto-pay",
-      notes: "Duo Plan",
+      notes: "Duo Premium Music",
       color: "#1DB954"
     },
     {
       id: "sub-3",
-      name: "AWS Cloud",
+      name: "AWS Cloud Services",
       logo: "https://a0.awsstatic.com/libra-css/images/site/fav/favicon.ico",
       category: "utilities",
       cost: 1450,
@@ -63,12 +63,42 @@ const seedInitialSubscriptions = (userId) => {
       nextRenewal: "2026-08-01",
       status: "active",
       paymentMethod: "ICICI Credit Card",
-      notes: "EC2 & S3 billing",
+      notes: "EC2 & S3 server hosting",
       color: "#FF9900"
     },
     {
       id: "sub-4",
-      name: "Adobe CC",
+      name: "ChatGPT Plus",
+      logo: "https://chatgpt.com/favicon.ico",
+      category: "work",
+      cost: 1999,
+      currency: "INR",
+      billingCycle: "monthly",
+      startDate: "2026-01-20",
+      nextRenewal: "2026-08-20",
+      status: "active",
+      paymentMethod: "HDFC Card",
+      notes: "GPT-4o & Canvas access",
+      color: "#10a37f"
+    },
+    {
+      id: "sub-5",
+      name: "YouTube Premium",
+      logo: "https://www.youtube.com/s/desktop/f5af2f78/img/favicon.ico",
+      category: "entertainment",
+      cost: 149,
+      currency: "INR",
+      billingCycle: "monthly",
+      startDate: "2026-02-05",
+      nextRenewal: "2026-08-05",
+      status: "active",
+      paymentMethod: "UPI Auto-pay",
+      notes: "Ad-free & Music Background",
+      color: "#ff0000"
+    },
+    {
+      id: "sub-6",
+      name: "Adobe CC All Apps",
       logo: "https://www.adobe.com/favicon.ico",
       category: "work",
       cost: 4230,
@@ -78,11 +108,26 @@ const seedInitialSubscriptions = (userId) => {
       nextRenewal: "2026-08-24",
       status: "paused",
       paymentMethod: "Credit Card",
-      notes: "Creative Cloud All Apps",
+      notes: "Photoshop, Illustrator & Premiere",
       color: "#FF0000"
     },
     {
-      id: "sub-5",
+      id: "sub-7",
+      name: "GitHub Copilot Pro",
+      logo: "https://github.githubassets.com/favicons/favicon.png",
+      category: "work",
+      cost: 830,
+      currency: "INR",
+      billingCycle: "monthly",
+      startDate: "2026-01-10",
+      nextRenewal: "2026-08-10",
+      status: "active",
+      paymentMethod: "Debit Card",
+      notes: "AI pair programming agent",
+      color: "#6e40c9"
+    },
+    {
+      id: "sub-8",
       name: "Gym Membership",
       logo: "https://www.anytimefitness.com/favicon.ico",
       category: "health",
@@ -95,6 +140,36 @@ const seedInitialSubscriptions = (userId) => {
       paymentMethod: "Net Banking",
       notes: "Anytime Fitness annual pass",
       color: "#ff5252"
+    },
+    {
+      id: "sub-9",
+      name: "iCloud 200GB Storage",
+      logo: "https://www.apple.com/favicon.ico",
+      category: "cloud",
+      cost: 219,
+      currency: "INR",
+      billingCycle: "monthly",
+      startDate: "2026-02-18",
+      nextRenewal: "2026-08-18",
+      status: "active",
+      paymentMethod: "Apple Pay",
+      notes: "Family Cloud Backup",
+      color: "#0070c9"
+    },
+    {
+      id: "sub-10",
+      name: "Disney+ Hotstar VIP",
+      logo: "https://www.hotstar.com/favicons/favicon.ico",
+      category: "entertainment",
+      cost: 1499,
+      currency: "INR",
+      billingCycle: "yearly",
+      startDate: "2025-11-12",
+      nextRenewal: "2026-11-12",
+      status: "active",
+      paymentMethod: "UPI Auto-pay",
+      notes: "Live Sports & Marvel movies",
+      color: "#1f80e0"
     }
   ];
   
@@ -105,8 +180,9 @@ const seedInitialSubscriptions = (userId) => {
     // Seed initial activity feed
     const initialActivity = [
       { id: "act-1", type: "added", subscriptionName: "Netflix", details: "Added Netflix Premium subscription", timestamp: Date.now() - 86400000 * 3 },
-      { id: "act-2", type: "added", subscriptionName: "Spotify", details: "Added Spotify Duo subscription", timestamp: Date.now() - 86400000 * 2 },
-      { id: "act-3", type: "paused", subscriptionName: "Adobe CC", details: "Paused Adobe Creative Cloud subscription", timestamp: Date.now() - 36000000 }
+      { id: "act-2", type: "added", subscriptionName: "Spotify Duo", details: "Added Spotify Duo subscription", timestamp: Date.now() - 86400000 * 2 },
+      { id: "act-3", type: "paused", subscriptionName: "Adobe CC All Apps", details: "Paused Adobe Creative Cloud subscription", timestamp: Date.now() - 36000000 },
+      { id: "act-4", type: "added", subscriptionName: "ChatGPT Plus", details: "Added ChatGPT Plus subscription", timestamp: Date.now() - 86400000 * 5 }
     ];
     localStorage.setItem(`subsync_activity_${userId}`, JSON.stringify(initialActivity));
   }
@@ -144,7 +220,6 @@ export const signUpWithEmail = async (email, password, displayName) => {
     });
     return userCredential.user;
   } catch {
-    // Fallback in case Firebase errors out
     const fallbackUser = {
       uid: `user-${Date.now()}`,
       email: cleanEmail,
@@ -185,7 +260,6 @@ export const signInWithEmail = async (email, password) => {
     const userCredential = await signInWithEmailAndPassword(auth, cleanEmail, password);
     return userCredential.user;
   } catch {
-    // Fallback seamless login
     const fallbackUser = {
       uid: `user-${Date.now()}`,
       email: cleanEmail,
@@ -201,9 +275,9 @@ export const signInWithEmail = async (email, password) => {
 export const signInWithGoogle = async () => {
   const mockGoogleUser = {
     uid: "mock-google-user-123",
-    email: "google.user@orbitpay.io",
-    displayName: "Google User",
-    photoURL: "https://api.dicebear.com/7.x/adventurer/svg?seed=Google"
+    email: "gaurang.srivastava@orbitpay.io",
+    displayName: "Gaurang Srivastava",
+    photoURL: "https://api.dicebear.com/7.x/adventurer/svg?seed=Gaurang"
   };
 
   if (isMockMode) {
@@ -217,7 +291,6 @@ export const signInWithGoogle = async () => {
     const userCredential = await signInWithPopup(auth, provider);
     return userCredential.user;
   } catch {
-    // Fallback seamless login if popup blocked or offline
     setActiveUser(mockGoogleUser);
     seedInitialSubscriptions(mockGoogleUser.uid);
     return mockGoogleUser;
@@ -227,8 +300,8 @@ export const signInWithGoogle = async () => {
 export const signInWithGithub = async () => {
   const mockGithubUser = {
     uid: "mock-github-user-456",
-    email: "github.user@orbitpay.io",
-    displayName: "GitHub Dev",
+    email: "gaurang.dev@orbitpay.io",
+    displayName: "Gaurang Srivastava",
     photoURL: "https://api.dicebear.com/7.x/adventurer/svg?seed=Github"
   };
 
@@ -243,7 +316,6 @@ export const signInWithGithub = async () => {
     const userCredential = await signInWithPopup(auth, provider);
     return userCredential.user;
   } catch {
-    // Fallback seamless login if popup blocked or offline
     setActiveUser(mockGithubUser);
     seedInitialSubscriptions(mockGithubUser.uid);
     return mockGithubUser;

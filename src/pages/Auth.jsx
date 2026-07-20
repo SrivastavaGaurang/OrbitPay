@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { GradientButton } from '../components/ui/GradientButton';
-import { Mail, Lock, User } from 'lucide-react';
+import { Mail, Lock, User, Sparkles, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Logo } from '../components/ui/Logo';
 import toast from 'react-hot-toast';
@@ -22,16 +22,30 @@ export default function Auth() {
     setLoading(true);
     try {
       if (isLogin) {
-        await login(email, password);
+        await login(email || 'gaurang@orbitpay.io', password || 'password123');
         toast.success("Welcome back to OrbitPay!");
       } else {
-        await signup(email, password, name);
+        await signup(email || 'gaurang@orbitpay.io', password || 'password123', name || 'Gaurang Srivastava');
         toast.success("Account created successfully!");
       }
       navigate('/dashboard');
     } catch (error) {
       console.error(error);
       toast.error(error.message || "Authentication failed.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDemoLogin = async () => {
+    setLoading(true);
+    try {
+      await login('gaurang@orbitpay.io', 'password123');
+      toast.success("Logged in to Pre-loaded Demo Account (Gaurang Srivastava)!");
+      navigate('/dashboard');
+    } catch (error) {
+      console.error(error);
+      toast.error("Demo login failed.");
     } finally {
       setLoading(false);
     }
@@ -77,11 +91,28 @@ export default function Auth() {
         <h3 className="text-2xl font-extrabold t-text text-center font-display mb-2">
           {isLogin ? 'Sign In' : 'Create Account'}
         </h3>
-        <p className="t-text-secondary text-xs text-center mb-6 leading-relaxed">
+        <p className="t-text-secondary text-xs text-center mb-5 leading-relaxed">
           {isLogin 
             ? 'Access your subscription database and savings insights.' 
             : 'Register now to start tracking your recurring spending.'}
         </p>
+
+        {/* Quick Demo Account Button */}
+        <button
+          type="button"
+          onClick={handleDemoLogin}
+          disabled={loading}
+          className="w-full mb-5 py-3 px-4 rounded-xl bg-gradient-to-r from-brand-purple/20 to-brand-cyan/20 border border-brand-purple/40 hover:border-brand-purple t-text text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-md shadow-brand-purple/10"
+        >
+          <Zap size={15} className="text-brand-cyan animate-pulse" />
+          <span>Quick Demo Account (Pre-loaded Data)</span>
+        </button>
+
+        <div className="flex items-center gap-3 mb-5">
+          <div className="h-px t-border flex-1" />
+          <span className="text-[10px] t-text-muted uppercase tracking-widest font-extrabold">Or Enter Credentials</span>
+          <div className="h-px t-border flex-1" />
+        </div>
 
         {/* Auth form */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -110,7 +141,7 @@ export default function Auth() {
               <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 t-text-muted" size={16} />
               <input
                 type="email"
-                placeholder="you@example.com"
+                placeholder="gaurang@orbitpay.io"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 rounded-xl t-bg-surface border t-border t-text text-sm focus:outline-none focus:border-brand-purple/50"
@@ -154,15 +185,14 @@ export default function Auth() {
         </form>
 
         {/* Separator */}
-        <div className="flex items-center gap-3 my-6">
+        <div className="flex items-center gap-3 my-5">
           <div className="h-px t-border flex-1" />
-          <span className="text-[10px] t-text-muted uppercase tracking-widest font-extrabold">Or Continue With</span>
+          <span className="text-[10px] t-text-muted uppercase tracking-widest font-extrabold">Social Connect</span>
           <div className="h-px t-border flex-1" />
         </div>
 
         {/* Social Authentication */}
-        <div className="grid grid-cols-2 gap-3 mb-6">
-          {/* Google */}
+        <div className="grid grid-cols-2 gap-3 mb-5">
           <button
             type="button"
             onClick={() => handleSocialLogin('google')}
@@ -178,7 +208,6 @@ export default function Auth() {
             Google
           </button>
 
-          {/* GitHub */}
           <button
             type="button"
             onClick={() => handleSocialLogin('github')}
