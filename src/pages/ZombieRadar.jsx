@@ -3,13 +3,13 @@ import { useSubscriptions } from '../context/SubscriptionContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { calculateMonthlyCost } from '../utils/helpers';
 import { GlassCard } from '../components/ui/GlassCard';
-import { 
-  Radar, 
-  Flame, 
-  AlertTriangle, 
-  CheckCircle2, 
-  HelpCircle, 
-  TrendingDown, 
+import {
+  Radar,
+  Flame,
+  AlertTriangle,
+  CheckCircle2,
+  HelpCircle,
+  TrendingDown,
   Sparkles,
   Zap,
   ArrowRight
@@ -118,9 +118,8 @@ export default function ZombieRadar() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <GlassCard className="!p-4" delay={0}>
           <div className="flex items-center gap-3">
-            <div className={`p-2.5 rounded-xl border ${
-              auditResults.overallHealth >= 75 ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-400'
-            }`}>
+            <div className={`p-2.5 rounded-xl border ${auditResults.overallHealth >= 75 ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-400'
+              }`}>
               <Zap size={20} />
             </div>
             <div>
@@ -188,19 +187,18 @@ export default function ZombieRadar() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.05 }}
-                className={`p-4 rounded-xl border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-all ${
-                  sub.isZombie
+                className={`p-4 rounded-xl border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-all ${sub.isZombie
                     ? 'bg-rose-500/10 border-rose-500/30'
                     : 't-bg-surface t-border'
-                }`}
+                  }`}
               >
                 <div className="flex items-center gap-3">
-                  <div 
+                  <div
                     className="w-11 h-11 rounded-xl flex items-center justify-center overflow-hidden p-1 flex-shrink-0"
                     style={{ backgroundColor: (sub.color || '#8b5cf6') + '22', border: `1px solid ${sub.color || '#8b5cf6'}44` }}
                   >
                     {sub.logo ? (
-                      <img src={sub.logo} alt={sub.name} className="w-full h-full object-contain" onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} />
+                      <img src={sub.logo} alt={sub.name} className="w-full h-full object-contain" onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }} />
                     ) : null}
                     <div className="w-full h-full flex items-center justify-center text-sm font-bold t-text uppercase" style={{ display: sub.logo ? 'none' : 'flex' }}>
                       {sub.name.charAt(0)}
@@ -239,9 +237,8 @@ export default function ZombieRadar() {
 
                   {/* Score badge */}
                   <div className="text-right min-w-[70px]">
-                    <span className={`text-sm font-extrabold block font-display ${
-                      sub.vfmScore >= 75 ? 'text-emerald-400' : sub.vfmScore >= 45 ? 'text-amber-400' : 'text-rose-400'
-                    }`}>
+                    <span className={`text-sm font-extrabold block font-display ${sub.vfmScore >= 75 ? 'text-emerald-400' : sub.vfmScore >= 45 ? 'text-amber-400' : 'text-rose-400'
+                      }`}>
                       {sub.vfmScore}/100
                     </span>
                     <span className="text-[9px] t-text-muted uppercase font-bold">VFM Score</span>

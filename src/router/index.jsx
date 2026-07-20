@@ -16,6 +16,7 @@ import Achievements from '../pages/Achievements';
 import Settings from '../pages/Settings';
 import Pricing from '../pages/Pricing';
 import NotFound from '../pages/NotFound';
+import Presentation from '../pages/Presentation';
 import { AppLayout } from '../components/layout/AppLayout';
 import { ProtectedRoute } from './ProtectedRoute';
 
@@ -82,6 +83,10 @@ export const router = createBrowserRouter([
       {
         path: 'achievements',
         element: <Achievements />
+      },
+      {
+        path: 'presentation',
+        element: <Presentation />
       },
       {
         path: 'settings',

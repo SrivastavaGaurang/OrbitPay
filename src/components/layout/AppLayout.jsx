@@ -17,7 +17,8 @@ import {
   Calculator,
   Users,
   Radar,
-  Trophy 
+  Trophy,
+  Presentation
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Logo } from '../ui/Logo';
@@ -44,6 +45,7 @@ export const AppLayout = () => {
     { name: 'Bill Splitter', path: '/split', icon: Users },
     { name: 'Zombie Radar', path: '/radar', icon: Radar },
     { name: 'Achievements', path: '/achievements', icon: Trophy },
+    { name: 'Presentation', path: '/presentation', icon: Presentation },
     { name: 'Settings', path: '/settings', icon: Settings },
   ];
 
