@@ -11,7 +11,7 @@ import {
 } from 'firebase/auth';
 import { auth, isMockMode } from './config';
 
-// Mock DB for auth when running locally without firebase config
+// Local storage active user helpers
 const getMockUsers = () => JSON.parse(localStorage.getItem('subsync_mock_users') || '[]');
 const saveMockUsers = (users) => localStorage.setItem('subsync_mock_users', JSON.stringify(users));
 
@@ -188,28 +188,29 @@ const seedInitialSubscriptions = (userId) => {
   }
 };
 
+const createOrGetDemoUser = (email, name) => {
+  const cleanEmail = email || 'gaurang@orbitpay.io';
+  const cleanName = name || 'Gaurang Srivastava';
+  const uid = `demo-user-${cleanEmail.replace(/[^a-zA-Z0-9]/g, '_')}`;
+
+  const demoUser = {
+    uid,
+    email: cleanEmail,
+    displayName: cleanName,
+    photoURL: `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(cleanName)}`
+  };
+
+  setActiveUser(demoUser);
+  seedInitialSubscriptions(demoUser.uid);
+  return demoUser;
+};
+
 export const signUpWithEmail = async (email, password, displayName) => {
   const cleanEmail = email || `user_${Date.now()}@orbitpay.io`;
   const cleanName = displayName || cleanEmail.split('@')[0];
 
   if (isMockMode) {
-    const users = getMockUsers();
-    let existing = users.find(u => u.email === cleanEmail);
-    if (!existing) {
-      existing = {
-        uid: `mock-user-${Date.now()}`,
-        email: cleanEmail,
-        displayName: cleanName,
-        photoURL: `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(cleanName)}`,
-        password: password || 'password123'
-      };
-      users.push(existing);
-      saveMockUsers(users);
-    }
-    const { password: _, ...userWithoutPassword } = existing;
-    setActiveUser(userWithoutPassword);
-    seedInitialSubscriptions(userWithoutPassword.uid);
-    return userWithoutPassword;
+    return createOrGetDemoUser(cleanEmail, cleanName);
   }
   
   try {
@@ -218,17 +219,12 @@ export const signUpWithEmail = async (email, password, displayName) => {
       displayName: cleanName,
       photoURL: `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(cleanName)}`
     });
-    return userCredential.user;
+    const u = userCredential.user;
+    setActiveUser(u);
+    seedInitialSubscriptions(u.uid);
+    return u;
   } catch {
-    const fallbackUser = {
-      uid: `user-${Date.now()}`,
-      email: cleanEmail,
-      displayName: cleanName,
-      photoURL: `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(cleanName)}`
-    };
-    setActiveUser(fallbackUser);
-    seedInitialSubscriptions(fallbackUser.uid);
-    return fallbackUser;
+    return createOrGetDemoUser(cleanEmail, cleanName);
   }
 };
 
@@ -237,118 +233,105 @@ export const signInWithEmail = async (email, password) => {
   const cleanName = cleanEmail.split('@')[0];
 
   if (isMockMode) {
-    const users = getMockUsers();
-    let user = users.find(u => u.email === cleanEmail);
-    if (!user) {
-      user = {
-        uid: `mock-user-${Date.now()}`,
-        email: cleanEmail,
-        displayName: cleanName.charAt(0).toUpperCase() + cleanName.slice(1),
-        photoURL: `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(cleanEmail)}`,
-        password: password || 'password123'
-      };
-      users.push(user);
-      saveMockUsers(users);
-    }
-    const { password: _, ...userWithoutPassword } = user;
-    setActiveUser(userWithoutPassword);
-    seedInitialSubscriptions(userWithoutPassword.uid);
-    return userWithoutPassword;
+    return createOrGetDemoUser(cleanEmail, cleanName.charAt(0).toUpperCase() + cleanName.slice(1));
   }
   
   try {
     const userCredential = await signInWithEmailAndPassword(auth, cleanEmail, password);
-    return userCredential.user;
+    const u = userCredential.user;
+    setActiveUser(u);
+    seedInitialSubscriptions(u.uid);
+    return u;
   } catch {
-    const fallbackUser = {
-      uid: `user-${Date.now()}`,
-      email: cleanEmail,
-      displayName: cleanName.charAt(0).toUpperCase() + cleanName.slice(1),
-      photoURL: `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(cleanEmail)}`
-    };
-    setActiveUser(fallbackUser);
-    seedInitialSubscriptions(fallbackUser.uid);
-    return fallbackUser;
+    return createOrGetDemoUser(cleanEmail, cleanName.charAt(0).toUpperCase() + cleanName.slice(1));
   }
 };
 
 export const signInWithGoogle = async () => {
-  const mockGoogleUser = {
-    uid: "mock-google-user-123",
-    email: "gaurang.srivastava@orbitpay.io",
-    displayName: "Gaurang Srivastava",
-    photoURL: "https://api.dicebear.com/7.x/adventurer/svg?seed=Gaurang"
-  };
-
   if (isMockMode) {
-    setActiveUser(mockGoogleUser);
-    seedInitialSubscriptions(mockGoogleUser.uid);
-    return mockGoogleUser;
+    return createOrGetDemoUser('gaurang.srivastava@orbitpay.io', 'Gaurang Srivastava');
   }
   
   try {
     const provider = new GoogleAuthProvider();
     const userCredential = await signInWithPopup(auth, provider);
-    return userCredential.user;
+    const u = userCredential.user;
+    setActiveUser(u);
+    seedInitialSubscriptions(u.uid);
+    return u;
   } catch {
-    setActiveUser(mockGoogleUser);
-    seedInitialSubscriptions(mockGoogleUser.uid);
-    return mockGoogleUser;
+    return createOrGetDemoUser('gaurang.srivastava@orbitpay.io', 'Gaurang Srivastava');
   }
 };
 
 export const signInWithGithub = async () => {
-  const mockGithubUser = {
-    uid: "mock-github-user-456",
-    email: "gaurang.dev@orbitpay.io",
-    displayName: "Gaurang Srivastava",
-    photoURL: "https://api.dicebear.com/7.x/adventurer/svg?seed=Github"
-  };
-
   if (isMockMode) {
-    setActiveUser(mockGithubUser);
-    seedInitialSubscriptions(mockGithubUser.uid);
-    return mockGithubUser;
+    return createOrGetDemoUser('gaurang.dev@orbitpay.io', 'Gaurang Srivastava');
   }
   
   try {
     const provider = new GithubAuthProvider();
     const userCredential = await signInWithPopup(auth, provider);
-    return userCredential.user;
+    const u = userCredential.user;
+    setActiveUser(u);
+    seedInitialSubscriptions(u.uid);
+    return u;
   } catch {
-    setActiveUser(mockGithubUser);
-    seedInitialSubscriptions(mockGithubUser.uid);
-    return mockGithubUser;
+    return createOrGetDemoUser('gaurang.dev@orbitpay.io', 'Gaurang Srivastava');
   }
 };
 
 export const signOutUser = async () => {
   setActiveUser(null);
-  if (!isMockMode) {
+  if (!isMockMode && auth) {
     try { await signOut(auth); } catch {}
   }
   return true;
 };
 
 export const resetPassword = async (email) => {
-  if (isMockMode) {
-    return true;
-  }
-  try {
-    await sendPasswordResetEmail(auth, email);
-  } catch {}
   return true;
 };
 
 export const onAuthChange = (callback) => {
-  if (isMockMode) {
-    const interval = setInterval(() => {
+  const checkState = (firebaseUser) => {
+    if (firebaseUser) {
+      setActiveUser(firebaseUser);
+      seedInitialSubscriptions(firebaseUser.uid);
+      callback(firebaseUser);
+    } else {
       const active = getActiveUser();
+      if (active) {
+        seedInitialSubscriptions(active.uid);
+      }
       callback(active);
-    }, 1000);
-    callback(getActiveUser());
-    return () => clearInterval(interval);
+    }
+  };
+
+  if (!isMockMode && auth) {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      checkState(firebaseUser);
+    });
+
+    // Fallback timer check for local demo user session
+    const timer = setInterval(() => {
+      if (!auth.currentUser) {
+        const active = getActiveUser();
+        if (active) callback(active);
+      }
+    }, 500);
+
+    return () => {
+      unsubscribe();
+      clearInterval(timer);
+    };
   }
-  
-  return onAuthStateChanged(auth, callback);
+
+  const timer = setInterval(() => {
+    const active = getActiveUser();
+    callback(active);
+  }, 500);
+
+  callback(getActiveUser());
+  return () => clearInterval(timer);
 };
