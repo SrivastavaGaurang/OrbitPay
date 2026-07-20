@@ -119,8 +119,8 @@ export default function Subscriptions() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-display">My Subscriptions</h2>
-          <p className="text-gray-400 text-sm mt-1 leading-relaxed">
+          <h2 className="text-2xl sm:text-3xl font-extrabold t-text font-display">My Subscriptions</h2>
+          <p className="t-text-secondary text-sm mt-1 leading-relaxed">
             Manage your catalog filters, pause trackers, or add integrations.
           </p>
         </div>
@@ -134,7 +134,7 @@ export default function Subscriptions() {
       </div>
 
       {/* Control Bar (Search, Filters, Sort) */}
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 bg-white/5 border border-white/10 rounded-2xl p-4">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 t-bg-surface border t-border rounded-2xl p-4">
         <SearchBar value={search} onChange={setSearch} />
         
         <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">

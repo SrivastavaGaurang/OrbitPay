@@ -25,10 +25,10 @@ export default function Dashboard() {
       {/* Welcome Banner */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-display flex items-center gap-2">
+          <h2 className="text-2xl sm:text-3xl font-extrabold t-text font-display flex items-center gap-2">
             Welcome back, {user?.displayName || 'User'} <span className="animate-[wave_1.5s_infinite]">👋</span>
           </h2>
-          <p className="text-gray-400 text-sm mt-1 leading-relaxed">
+          <p className="t-text-secondary text-sm mt-1 leading-relaxed">
             Here's an overview of your active subscriptions and savings potential.
           </p>
         </div>
@@ -81,8 +81,8 @@ export default function Dashboard() {
         <GlassCard className="lg:col-span-7 flex flex-col justify-between" delay={0.25}>
           <div className="flex justify-between items-start mb-6">
             <div>
-              <h4 className="font-bold text-white text-lg font-display">Subscription Galaxy</h4>
-              <p className="text-xs text-gray-400 mt-1">Planets orbit around central spendings sized by relative costs.</p>
+              <h4 className="font-bold t-text text-lg font-display">Subscription Galaxy</h4>
+              <p className="text-xs t-text-secondary mt-1">Planets orbit around central spendings sized by relative costs.</p>
             </div>
             <div className="px-2.5 py-1 rounded-lg bg-brand-purple/10 border border-brand-purple/20 text-brand-purple text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
               <Sparkles size={10} className="animate-spin text-brand-cyan" /> 3D-Orbit Mode
@@ -101,8 +101,8 @@ export default function Dashboard() {
         {/* Categories Distribution Donut */}
         <GlassCard className="lg:col-span-5 flex flex-col justify-between" delay={0.3}>
           <div>
-            <h4 className="font-bold text-white text-lg font-display">Category Breakdown</h4>
-            <p className="text-xs text-gray-400 mt-1">Expenses structured by service types.</p>
+            <h4 className="font-bold t-text text-lg font-display">Category Breakdown</h4>
+            <p className="text-xs t-text-secondary mt-1">Expenses structured by service types.</p>
           </div>
           
           <div className="flex-1 flex items-center justify-center">
@@ -116,8 +116,8 @@ export default function Dashboard() {
         {/* Expenditure History Area Line Chart */}
         <GlassCard className="lg:col-span-7" delay={0.35}>
           <div className="mb-6">
-            <h4 className="font-bold text-white text-lg font-display">Spending Trends</h4>
-            <p className="text-xs text-gray-400 mt-1">Monthly recurring cost history over the last 6 months.</p>
+            <h4 className="font-bold t-text text-lg font-display">Spending Trends</h4>
+            <p className="text-xs t-text-secondary mt-1">Monthly recurring cost history over the last 6 months.</p>
           </div>
           <SpendingChart subscriptions={subscriptions} />
         </GlassCard>
@@ -127,8 +127,8 @@ export default function Dashboard() {
           {/* Timeline */}
           <GlassCard className="flex-1" delay={0.4}>
             <div className="mb-5">
-              <h4 className="font-bold text-white text-md font-display">Upcoming Renewals</h4>
-              <p className="text-xs text-gray-400 mt-0.5">Urgent payments due in the next few days.</p>
+              <h4 className="font-bold t-text text-md font-display">Upcoming Renewals</h4>
+              <p className="text-xs t-text-secondary mt-0.5">Urgent payments due in the next few days.</p>
             </div>
             <RenewalTimeline limit={3} />
           </GlassCard>
@@ -136,8 +136,8 @@ export default function Dashboard() {
           {/* Activity Feed */}
           <GlassCard className="flex-1" delay={0.45}>
             <div className="mb-5">
-              <h4 className="font-bold text-white text-md font-display">Recent Activity</h4>
-              <p className="text-xs text-gray-400 mt-0.5">Chronological record of updates.</p>
+              <h4 className="font-bold t-text text-md font-display">Recent Activity</h4>
+              <p className="text-xs t-text-secondary mt-0.5">Chronological record of updates.</p>
             </div>
             <ActivityFeed limit={3} />
           </GlassCard>

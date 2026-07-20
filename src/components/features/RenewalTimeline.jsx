@@ -18,9 +18,9 @@ export const RenewalTimeline = ({ limit = 4 }) => {
 
   if (upcomingSubs.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-8 text-center text-gray-500">
-        <Calendar size={32} className="text-gray-600 mb-2" />
-        <span className="text-sm">No upcoming renewals</span>
+      <div className="flex flex-col items-center justify-center py-8 text-center t-text-muted">
+        <Calendar size={32} className="opacity-40 mb-2" />
+        <span className="text-sm font-semibold">No upcoming renewals</span>
       </div>
     );
   }
@@ -30,8 +30,8 @@ export const RenewalTimeline = ({ limit = 4 }) => {
       {upcomingSubs.map((sub) => {
         const { id, name, logo, cost, currency, nextRenewal, daysLeft, color } = sub;
         
-        let urgencyColor = 'border-white/10 text-gray-300';
-        let badgeColor = 'bg-white/5 text-gray-400';
+        let urgencyColor = 't-border t-bg-surface';
+        let badgeColor = 't-bg-surface t-text-muted';
         
         if (daysLeft <= 3) {
           urgencyColor = 'border-rose-500/20 bg-rose-500/5';
@@ -48,7 +48,7 @@ export const RenewalTimeline = ({ limit = 4 }) => {
           >
             <div className="flex items-center gap-3">
               {/* Logo */}
-              <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden p-1">
+              <div className="w-10 h-10 rounded-lg t-bg-surface border t-border flex items-center justify-center overflow-hidden p-1">
                 {logo ? (
                   <img 
                     src={logo} 
@@ -61,7 +61,7 @@ export const RenewalTimeline = ({ limit = 4 }) => {
                   />
                 ) : null}
                 <div 
-                  className="w-full h-full flex items-center justify-center text-sm font-bold text-white uppercase"
+                  className="w-full h-full flex items-center justify-center text-sm font-bold t-text uppercase"
                   style={{ display: logo ? 'none' : 'flex', backgroundColor: (color || '#8b5cf6') + '33' }}
                 >
                   {name.charAt(0)}
@@ -69,8 +69,8 @@ export const RenewalTimeline = ({ limit = 4 }) => {
               </div>
               
               <div>
-                <h5 className="font-semibold text-white text-sm font-display">{name}</h5>
-                <span className="text-xs text-gray-400 flex items-center gap-1 mt-0.5">
+                <h5 className="font-bold t-text text-sm font-display">{name}</h5>
+                <span className="text-xs t-text-muted flex items-center gap-1 mt-0.5 font-medium">
                   <Calendar size={11} />
                   {new Date(nextRenewal).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
                 </span>
@@ -78,7 +78,7 @@ export const RenewalTimeline = ({ limit = 4 }) => {
             </div>
             
             <div className="text-right">
-              <span className="font-bold text-white text-sm block">
+              <span className="font-extrabold t-text text-sm block font-display">
                 {formatCurrency(cost, currency)}
               </span>
               <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider mt-1.5 ${badgeColor}`}>

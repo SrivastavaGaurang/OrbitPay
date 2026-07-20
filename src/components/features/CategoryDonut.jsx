@@ -11,7 +11,6 @@ import { formatCurrency } from '../../utils/helpers';
 import { CATEGORIES } from '../../utils/constants';
 
 export const CategoryDonut = ({ categorySpend = {} }) => {
-  // Transform categorySpend object into Recharts array data
   const data = Object.keys(categorySpend).map(key => {
     const categoryInfo = CATEGORIES.find(c => c.id === key) || { name: 'Other', color: '#6b7280' };
     return {
@@ -24,8 +23,8 @@ export const CategoryDonut = ({ categorySpend = {} }) => {
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="glass-premium p-3 rounded-xl border border-white/10 shadow-2xl">
-          <p className="text-white font-bold text-xs font-display">{payload[0].name}</p>
+        <div className="glass-premium p-3 rounded-xl border t-border shadow-2xl">
+          <p className="t-text font-bold text-xs font-display">{payload[0].name}</p>
           <p className="text-brand-cyan font-bold text-sm mt-1">
             {formatCurrency(payload[0].value)}
           </p>
@@ -38,12 +37,12 @@ export const CategoryDonut = ({ categorySpend = {} }) => {
   const renderLegend = (props) => {
     const { payload } = props;
     return (
-      <ul className="flex flex-col gap-2 text-xs text-gray-400">
+      <ul className="flex flex-col gap-2 text-xs t-text-muted">
         {payload.map((entry, index) => (
           <li key={`item-${index}`} className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: entry.color }} />
-            <span className="font-medium text-gray-300">{entry.value}:</span>
-            <span>{formatCurrency(entry.payload.value)}</span>
+            <span className="font-semibold t-text">{entry.value}:</span>
+            <span className="font-bold text-brand-purple">{formatCurrency(entry.payload.value)}</span>
           </li>
         ))}
       </ul>
@@ -52,7 +51,7 @@ export const CategoryDonut = ({ categorySpend = {} }) => {
 
   if (data.length === 0) {
     return (
-      <div className="h-60 flex items-center justify-center text-gray-500 text-sm">
+      <div className="h-60 flex items-center justify-center t-text-muted text-sm font-semibold">
         No active subscription data.
       </div>
     );

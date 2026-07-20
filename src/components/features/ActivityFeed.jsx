@@ -19,7 +19,7 @@ export const ActivityFeed = ({ limit = 5 }) => {
       case 'updated':
         return <Edit3 className="text-violet-400" size={16} />;
       default:
-        return <RefreshCw className="text-gray-400" size={16} />;
+        return <RefreshCw className="t-text-muted" size={16} />;
     }
   };
 
@@ -27,7 +27,7 @@ export const ActivityFeed = ({ limit = 5 }) => {
 
   if (displayLogs.length === 0) {
     return (
-      <div className="text-center py-8 text-gray-500 text-sm">
+      <div className="text-center py-8 t-text-muted text-sm font-semibold">
         No recent activities logged.
       </div>
     );
@@ -40,18 +40,18 @@ export const ActivityFeed = ({ limit = 5 }) => {
         return (
           <div key={id} className="flex gap-3">
             {/* Action Icon Node */}
-            <div className="mt-1 w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
+            <div className="mt-1 w-7 h-7 rounded-lg t-bg-surface border t-border flex items-center justify-center flex-shrink-0">
               {getIcon(type)}
             </div>
             
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white font-display truncate">
+              <p className="text-sm font-bold t-text font-display truncate">
                 {subscriptionName}
               </p>
-              <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
+              <p className="text-xs t-text-secondary mt-0.5 leading-relaxed">
                 {details}
               </p>
-              <span className="text-[10px] text-gray-500 block mt-1.5">
+              <span className="text-[10px] t-text-muted font-medium block mt-1.5">
                 {formatDistanceToNow(new Date(timestamp), { addSuffix: true })}
               </span>
             </div>
