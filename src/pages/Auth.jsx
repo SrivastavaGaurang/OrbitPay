@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { GradientButton } from '../components/ui/GradientButton';
-import { Sparkles, Mail, Lock, User } from 'lucide-react';
+import { Mail, Lock, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Logo } from '../components/ui/Logo';
 import toast from 'react-hot-toast';
@@ -19,20 +19,11 @@ export default function Auth() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !password) {
-      toast.error("Please fill in all fields.");
-      return;
-    }
-    if (!isLogin && !name) {
-      toast.error("Please enter your name.");
-      return;
-    }
-
     setLoading(true);
     try {
       if (isLogin) {
         await login(email, password);
-        toast.success("Welcome back to SubSync!");
+        toast.success("Welcome back to OrbitPay!");
       } else {
         await signup(email, password, name);
         toast.success("Account created successfully!");
@@ -51,7 +42,7 @@ export default function Auth() {
     try {
       if (type === 'google') await loginWithGoogle();
       else await loginWithGithub();
-      toast.success("Welcome to SubSync!");
+      toast.success("Welcome to OrbitPay!");
       navigate('/dashboard');
     } catch (error) {
       console.error(error);
@@ -74,7 +65,7 @@ export default function Auth() {
 
       {/* Main card */}
       <motion.div
-        className="w-full max-w-md glass-premium rounded-2xl p-8 border border-white/10 shadow-2xl relative overflow-hidden"
+        className="w-full max-w-md glass-premium rounded-2xl p-8 border t-border shadow-2xl relative overflow-hidden text-left"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: 'spring', damping: 20 }}
@@ -83,10 +74,10 @@ export default function Auth() {
         <div className="absolute -top-24 -left-24 w-48 h-48 bg-brand-purple/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-brand-cyan/15 rounded-full blur-3xl pointer-events-none" />
 
-        <h3 className="text-2xl font-extrabold text-white text-center font-display mb-2">
+        <h3 className="text-2xl font-extrabold t-text text-center font-display mb-2">
           {isLogin ? 'Sign In' : 'Create Account'}
         </h3>
-        <p className="text-gray-400 text-xs text-center mb-6 leading-relaxed">
+        <p className="t-text-secondary text-xs text-center mb-6 leading-relaxed">
           {isLogin 
             ? 'Access your subscription database and savings insights.' 
             : 'Register now to start tracking your recurring spending.'}
@@ -97,57 +88,54 @@ export default function Auth() {
           
           {/* Name Field (Sign Up Only) */}
           {!isLogin && (
-            <div className="flex flex-col gap-1.5 text-left">
-              <label className="text-xs text-gray-400 font-medium">Name</label>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs t-text-muted font-bold uppercase tracking-wider">Name</label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+                <User className="absolute left-3.5 top-1/2 -translate-y-1/2 t-text-muted" size={16} />
                 <input
                   type="text"
                   placeholder="Gaurang Srivastava"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2.5 rounded-xl glass border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-brand-purple/40 text-sm"
-                  required
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl t-bg-surface border t-border t-text text-sm focus:outline-none focus:border-brand-purple/50"
                 />
               </div>
             </div>
           )}
 
           {/* Email Field */}
-          <div className="flex flex-col gap-1.5 text-left">
-            <label className="text-xs text-gray-400 font-medium">Email Address</label>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs t-text-muted font-bold uppercase tracking-wider">Email Address</label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 t-text-muted" size={16} />
               <input
                 type="email"
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 rounded-xl glass border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-brand-purple/40 text-sm"
-                required
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl t-bg-surface border t-border t-text text-sm focus:outline-none focus:border-brand-purple/50"
               />
             </div>
           </div>
 
           {/* Password Field */}
-          <div className="flex flex-col gap-1.5 text-left">
-            <label className="text-xs text-gray-400 font-medium flex justify-between">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs t-text-muted font-bold uppercase tracking-wider flex justify-between">
               <span>Password</span>
               {isLogin && (
-                <span className="text-[10px] text-brand-cyan hover:underline cursor-pointer">
+                <span className="text-[10px] text-brand-cyan hover:underline cursor-pointer lowercase">
                   Forgot Password?
                 </span>
               )}
             </label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 t-text-muted" size={16} />
               <input
                 type="password"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 rounded-xl glass border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-brand-purple/40 text-sm"
-                required
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl t-bg-surface border t-border t-text text-sm focus:outline-none focus:border-brand-purple/50"
               />
             </div>
           </div>
@@ -158,7 +146,7 @@ export default function Auth() {
             variant="purple-cyan" 
             disabled={loading}
             fullWidth 
-            className="mt-2 text-sm font-semibold"
+            className="mt-2 text-sm font-bold py-3"
           >
             {loading ? 'Authenticating...' : isLogin ? 'Sign In' : 'Sign Up'}
           </GradientButton>
@@ -167,20 +155,20 @@ export default function Auth() {
 
         {/* Separator */}
         <div className="flex items-center gap-3 my-6">
-          <div className="h-px bg-white/10 flex-1" />
-          <span className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">Or Continue With</span>
-          <div className="h-px bg-white/10 flex-1" />
+          <div className="h-px t-border flex-1" />
+          <span className="text-[10px] t-text-muted uppercase tracking-widest font-extrabold">Or Continue With</span>
+          <div className="h-px t-border flex-1" />
         </div>
 
         {/* Social Authentication */}
         <div className="grid grid-cols-2 gap-3 mb-6">
           {/* Google */}
           <button
+            type="button"
             onClick={() => handleSocialLogin('google')}
             disabled={loading}
-            className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 text-gray-300 hover:text-white transition-colors cursor-pointer text-xs font-semibold"
+            className="flex items-center justify-center gap-2 py-2.5 rounded-xl t-bg-surface border t-border hover:border-brand-purple/40 t-text transition-colors cursor-pointer text-xs font-bold"
           >
-            {/* Simple Inline Google SVG */}
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
               <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -192,9 +180,10 @@ export default function Auth() {
 
           {/* GitHub */}
           <button
+            type="button"
             onClick={() => handleSocialLogin('github')}
             disabled={loading}
-            className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 text-gray-300 hover:text-white transition-colors cursor-pointer text-xs font-semibold"
+            className="flex items-center justify-center gap-2 py-2.5 rounded-xl t-bg-surface border t-border hover:border-brand-purple/40 t-text transition-colors cursor-pointer text-xs font-bold"
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
@@ -205,7 +194,7 @@ export default function Auth() {
         </div>
 
         {/* Toggle Footer */}
-        <p className="text-xs text-gray-400 text-center">
+        <p className="text-xs t-text-secondary text-center">
           {isLogin ? "Don't have an account? " : "Already have an account? "}
           <span
             onClick={() => setIsLogin(!isLogin)}

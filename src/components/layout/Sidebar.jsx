@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { 
@@ -8,7 +8,6 @@ import {
   TrendingUp, 
   Settings, 
   LogOut, 
-  Sparkles,
   ChevronLeft,
   ChevronRight,
   Wallet,
@@ -45,7 +44,7 @@ export const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
       {/* Collapse Trigger Button */}
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute top-16 -right-3.5 w-7 h-7 rounded-full t-bg-dark border t-border hover:border-brand-purple/30 t-text-secondary hover:t-text flex items-center justify-center cursor-pointer shadow-lg"
+        className="absolute top-16 -right-3.5 w-7 h-7 rounded-full t-bg-card border t-border hover:border-brand-purple/40 t-text-secondary hover:t-text flex items-center justify-center cursor-pointer shadow-md z-30"
       >
         {isCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
       </button>
@@ -59,15 +58,15 @@ export const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
           return (
             <Link key={item.name} to={item.path}>
               <motion.div
-                className={`flex items-center gap-3.5 px-3 py-3.5 rounded-xl text-sm font-medium transition-all select-none border ${
+                className={`flex items-center gap-3.5 px-3.5 py-3.5 rounded-xl text-sm transition-all select-none border ${
                   isActive
-                    ? 'bg-brand-purple/10 border-brand-purple/20 text-white shadow-inner'
-                    : 'bg-transparent border-transparent text-gray-400 hover:text-white hover:bg-white/5'
+                    ? 'bg-brand-purple/15 border-brand-purple/30 t-text font-extrabold shadow-sm'
+                    : 'bg-transparent border-transparent t-text-secondary hover:t-text hover:t-bg-surface font-bold'
                 }`}
                 whileHover={{ x: isCollapsed ? 0 : 4 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <div className={`flex-shrink-0 ${isActive ? 'text-brand-cyan' : ''}`}>
+                <div className={`flex-shrink-0 ${isActive ? 'text-brand-purple' : 't-text-secondary'}`}>
                   <Icon size={20} />
                 </div>
                 {!isCollapsed && (
@@ -75,6 +74,7 @@ export const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.05 }}
+                    className="truncate font-display"
                   >
                     {item.name}
                   </motion.span>
@@ -86,25 +86,28 @@ export const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
       </nav>
 
       {/* Footer Profile / Logout */}
-      <div className="border-t border-white/5 pt-4">
+      <div className="border-t t-border pt-4">
         {/* User Card */}
         {user && !isCollapsed && (
           <div className="flex items-center gap-3 px-2 mb-3">
             <img
               src={user.photoURL}
               alt={user.displayName}
-              className="w-9 h-9 rounded-full bg-white/5 border border-white/10"
+              className="w-9 h-9 rounded-full bg-slate-800 border t-border"
+              onError={(e) => {
+                e.target.src = `https://api.dicebear.com/7.x/initials/svg?seed=${user.displayName || 'User'}`;
+              }}
             />
             <div className="min-w-0">
-              <p className="text-xs font-semibold text-white truncate font-display">{user.displayName}</p>
-              <p className="text-[10px] text-gray-500 truncate mt-0.5">{user.email}</p>
+              <p className="text-xs font-bold t-text truncate font-display">{user.displayName}</p>
+              <p className="text-[10px] t-text-muted truncate mt-0.5">{user.email}</p>
             </div>
           </div>
         )}
 
         <button
           onClick={logout}
-          className="w-full flex items-center gap-3.5 px-3 py-3.5 rounded-xl text-sm font-medium border border-transparent text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 transition-colors select-none"
+          className="w-full flex items-center gap-3.5 px-3.5 py-3.5 rounded-xl text-sm font-bold border border-transparent text-rose-500 hover:text-rose-600 hover:bg-rose-500/10 transition-colors select-none"
         >
           <LogOut size={20} className="flex-shrink-0" />
           {!isCollapsed && <span>Sign Out</span>}

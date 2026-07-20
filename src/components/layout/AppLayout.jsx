@@ -89,12 +89,12 @@ export const AppLayout = () => {
                       to={item.path}
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      <div className={`flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium transition-colors border ${
+                      <div className={`flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-bold transition-colors border ${
                         isActive
-                          ? 'bg-brand-purple/10 border-brand-purple/20 t-text'
-                          : 'bg-transparent border-transparent t-text-secondary hover:t-text hover:bg-white/5'
+                          ? 'bg-brand-purple/15 border-brand-purple/30 t-text'
+                          : 'bg-transparent border-transparent t-text-secondary hover:t-text hover:t-bg-surface'
                       }`}>
-                        <Icon size={18} />
+                        <Icon size={18} className={isActive ? 'text-brand-purple' : 't-text-secondary'} />
                         <span>{item.name}</span>
                       </div>
                     </Link>
